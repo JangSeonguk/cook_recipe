@@ -1,0 +1,52 @@
+import 'package:cook_recipe/ui/color_styles.dart';
+import 'package:cook_recipe/ui/text_styles.dart';
+import 'package:flutter/material.dart';
+
+class InputField extends StatelessWidget {
+  final String label;
+  final String placeholder;
+  final TextEditingController? controller;
+
+  const InputField({
+    super.key,
+    required this.label,
+    required this.placeholder,
+    this.controller,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Text(
+          label,
+          style: TextStyles.smallTextRegular,
+        ),
+        const SizedBox(
+          height: 5,
+        ),
+        SizedBox(
+          height: 48,
+          child: TextField(
+            controller: controller,
+            decoration: InputDecoration(
+              hintText: placeholder,
+              hintStyle: TextStyles.smallTextRegular
+                  .copyWith(color: ColorStyles.gray4),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide: const BorderSide(color: ColorStyles.gray4),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide: const BorderSide(color: ColorStyles.primary80),
+              ),
+            ),
+          ),
+        )
+      ],
+    );
+  }
+}
