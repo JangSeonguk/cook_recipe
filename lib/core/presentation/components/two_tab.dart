@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class TwoTab extends StatelessWidget {
   final List<String> labels;
   final int selectedIndex;
-  final int gab;
+  final double gab;
   final void Function(int index) onChange;
 
   const TwoTab({
@@ -20,20 +20,27 @@ class TwoTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        GestureDetector(
-          onTap: () {
-            onChange(0);
-          },
-          child: _SelectedTab(
-            text: labels[0],
+        Expanded(
+          child: GestureDetector(
+            onTap: () {
+              onChange(0);
+            },
+            child: selectedIndex == 0
+                ? _SelectedTab(text: labels[0])
+                : _UnselectedTab(text: labels[0]),
           ),
         ),
-        GestureDetector(
-          onTap: () {
-            onChange(1);
-          },
-          child: _UnselectedTab(
-            text: labels[1],
+        SizedBox(
+          width: gab,
+        ),
+        Expanded(
+          child: GestureDetector(
+            onTap: () {
+              onChange(1);
+            },
+            child: selectedIndex == 1
+                ? _SelectedTab(text: labels[1])
+                : _UnselectedTab(text: labels[1]),
           ),
         )
       ],
@@ -54,14 +61,12 @@ class _SelectedTab extends StatelessWidget {
           borderRadius: BorderRadius.circular(10),
           color: ColorStyles.primary100),
       child: SizedBox(
-        // sizedbox가 성능상 컨테이너보다 좋다.
         height: 33,
         child: Center(
           child: Text(
             textAlign: TextAlign.center,
             text,
-            style: TextStyles.normalTextBold.copyWith(color: Colors.white),
-            //copywith 사용 시, 런타임에 복사가 되기때문에 성능이 떨어질 수 있음. 민감할 경우 미리 다른 스타일을 만들어두면됨
+            style: TextStyles.smallTextBold.copyWith(color: Colors.white),
           ),
         ),
       ),
@@ -79,17 +84,15 @@ class _UnselectedTab extends StatelessWidget {
     return Container(
       height: 37,
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          color: ColorStyles.primary100),
+          borderRadius: BorderRadius.circular(10), color: ColorStyles.white),
       child: SizedBox(
-        // sizedbox가 성능상 컨테이너보다 좋다.
         height: 33,
         child: Center(
           child: Text(
             textAlign: TextAlign.center,
             text,
-            style: TextStyles.normalTextBold.copyWith(color: Colors.white),
-            //copywith 사용 시, 런타임에 복사가 되기때문에 성능이 떨어질 수 있음. 민감할 경우 미리 다른 스타일을 만들어두면됨
+            style: TextStyles.smallTextBold
+                .copyWith(color: ColorStyles.primary100),
           ),
         ),
       ),
